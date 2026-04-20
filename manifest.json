@@ -1,0 +1,35 @@
+{
+  "manifest_version": 2,
+  "name": "YT Transcriber",
+  "version": "1.0.0",
+  "description": "Time-aligned English transcript panel for YouTube videos, powered by a local backend.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms",
+    "http://localhost:8000/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/watch*"],
+      "js": ["content.js"],
+      "css": ["panel.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.svg",
+    "48": "icons/icon48.svg",
+    "128": "icons/icon128.svg"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "yt-transcriber@local",
+      "strict_min_version": "109.0"
+    }
+  }
+}

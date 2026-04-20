@@ -1,0 +1,198 @@
+/* ─── Panel Container ─────────────────────────────────────────────────────── */
+
+#yt-transcriber-panel {
+  font-family: "Roboto", "Arial", sans-serif;
+  font-size: 14px;
+  background: #0f0f0f;
+  border: 1px solid #272727;
+  border-radius: 12px;
+  color: #fff;
+  margin-bottom: 16px;
+  overflow: hidden;
+  max-height: 520px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Theater mode: panel lives below the primary column */
+#yt-transcriber-panel.ytt-theater {
+  max-height: 300px;
+  margin-top: 16px;
+  border-radius: 8px;
+}
+
+/* ─── Header ──────────────────────────────────────────────────────────────── */
+
+.ytt-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #272727;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.ytt-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.ytt-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.ytt-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+
+.ytt-btn:hover {
+  color: #fff;
+  background: #3a3a3a;
+}
+
+.ytt-btn-transcribe {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: #cc0000;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.ytt-btn-transcribe:hover {
+  background: #ff0000;
+  color: #fff;
+}
+
+/* ─── Status Bar ──────────────────────────────────────────────────────────── */
+
+.ytt-status {
+  display: none;
+  padding: 8px 14px;
+  font-size: 12px;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+.ytt-status.ytt-error {
+  color: #ff6b6b;
+}
+
+/* ─── Progress Bar ────────────────────────────────────────────────────────── */
+
+.ytt-progress-bar-wrap {
+  height: 2px;
+  background: #272727;
+  flex-shrink: 0;
+}
+
+.ytt-progress-bar {
+  height: 100%;
+  background: #ff0000;
+  width: 0%;
+  transition: width 0.5s ease;
+}
+
+/* ─── Segments Container ──────────────────────────────────────────────────── */
+
+.ytt-segments {
+  overflow-y: auto;
+  flex: 1;
+  padding: 4px 0;
+}
+
+.ytt-segments::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ytt-segments::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ytt-segments::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 2px;
+}
+
+.ytt-segments::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* ─── Individual Segment Row ──────────────────────────────────────────────── */
+
+.ytt-segment {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 6px 14px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.1s;
+}
+
+.ytt-segment:hover {
+  background: #1a1a1a;
+}
+
+.ytt-segment:hover .ytt-text {
+  color: #fff;
+}
+
+/* Active (currently playing) segment */
+.ytt-segment.active {
+  background: #1f1f1f;
+}
+
+.ytt-segment.active .ytt-text {
+  color: #fff;
+  font-weight: 500;
+}
+
+.ytt-segment.active .ytt-time {
+  color: #ff0000;
+}
+
+/* ─── Segment Time Stamp ──────────────────────────────────────────────────── */
+
+.ytt-time {
+  font-size: 11px;
+  color: #717171;
+  min-width: 38px;
+  flex-shrink: 0;
+  padding-top: 3px;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ─── Segment Text ────────────────────────────────────────────────────────── */
+
+.ytt-text {
+  font-size: 13px;
+  color: #ccc;
+  line-height: 1.55;
+  word-break: break-word;
+}
+
+/* ─── Empty State ─────────────────────────────────────────────────────────── */
+
+.ytt-empty {
+  padding: 24px 14px;
+  color: #717171;
+  font-size: 13px;
+  text-align: center;
+}
