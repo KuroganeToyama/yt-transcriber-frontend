@@ -21,6 +21,8 @@ let panelState = "idle";
 // kept for backward compat with syncPanelState segment restore
 let transcriptReady = false;
 
+let videoTitleEn = "";
+
 // ─── Message Listener ─────────────────────────────────────────────────────────
 
 browser.runtime.onMessage.addListener((msg) => {
@@ -37,6 +39,7 @@ browser.runtime.onMessage.addListener((msg) => {
 
     case "TRANSCRIPT_READY":
       segments = msg.transcript.segments || [];
+      videoTitleEn = msg.transcript.titleEn || "";
       transcriptReady = true;
       panelState = "done";
       updateProgressBar(1);
@@ -47,6 +50,7 @@ browser.runtime.onMessage.addListener((msg) => {
         const panel = buildPanelElement();
         insertPanel(panel, anchor);
       }
+      renderVideoTitle();
       renderSegments();
       startPlaybackSync();
       applyPanelButtons();
@@ -242,6 +246,7 @@ function buildPanelElement() {
     <div class="ytt-progress-bar-wrap">
       <div class="ytt-progress-bar" id="ytt-progress-bar"></div>
     </div>
+    <div class="ytt-video-title" id="ytt-video-title"></div>
     <div class="ytt-segments" id="ytt-segments"></div>
   `;
   attachPanelHandlers(panel);
@@ -292,6 +297,12 @@ function syncPanelState(panel) {
   const bar = panel.querySelector("#ytt-progress-bar");
   if (bar) {
     bar.style.width = `${Math.round(Math.min(1, Math.max(0, uiProgress)) * 100)}%`;
+  }
+  // Restore video title
+  const titleEl = panel.querySelector("#ytt-video-title");
+  if (titleEl) {
+    titleEl.textContent = videoTitleEn;
+    titleEl.style.display = videoTitleEn ? "block" : "none";
   }
   // Restore segments and playback sync if transcript is ready
   if (transcriptReady && segments.length > 0) {
@@ -380,6 +391,19 @@ function setupTheaterObserver() {
   });
 
   applyTheaterLayout(); // Run immediately for the current state
+}
+
+// ─── Video Title ──────────────────────────────────────────────────────────────
+
+function renderVideoTitle() {
+  const el = document.getElementById("ytt-video-title");
+  if (!el) return;
+  if (videoTitleEn) {
+    el.textContent = videoTitleEn;
+    el.style.display = "block";
+  } else {
+    el.style.display = "none";
+  }
 }
 
 // ─── Segment Rendering ────────────────────────────────────────────────────────
@@ -566,6 +590,7 @@ function teardown() {
   uiProgress = 0;
   panelState = "idle";
   transcriptReady = false;
+  videoTitleEn = "";
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
